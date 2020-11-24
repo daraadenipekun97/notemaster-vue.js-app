@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Title</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <style>
+      .alert-in-enter-active{
+        animation: bounce-in .5s;
+      }
+      .alert-in-leave-active{
+        animation: bounce-in .5s reverse; 
+      }
+      @keyframes bounce-in{
+        0%{
+          transform:scale(0);
+        }
+        50%{
+          transform: scale(1.5);
+        }
+        100%{
+          transform: scale(1);
+        }
+      }
+    </style>
+  </head>
+  <body>
+
+    <div id="app">
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-6">
+            <h4 class="display-4 mt-4">{{title}}</h4>
+            <p class="lead text-primary">NoteMaster is an app made using HTML,CSS, Bootstrap and Vue.js. All you need do is type in a recreation place you've visited  and your experience about the place</p>
+            <div class="form-group">
+              <div class="form-group">
+                <label for="noteTitle" class="lead">Note Title</label>
+                <input type="text" id="noteTitle" class="form-control" v-model = "note.title" >
+              </div>
+              <div class="form-group">
+                <label for="noteText" class="lead">Note Text</label>
+                <textarea id="noteText" class="form-control" v-model = "note.text"></textarea>
+              </div>
+            </div>
+            <button class="btn btn-primary" v-on:click = "addNotes">Add Note</button>
+          </div>
+          <div class="col-sm">
+            <transition-group name= "alert-in">
+            <div class="card my-5" v-for="(note, index) in notes":key = 'index'><h6 class="lead text-muted">{{index}}</h6>
+              <div class="card-block px-2 py-2">
+                <button class="close" type="button" v-on:click="removeNote(index)">&times;</button>
+                <h5 class="card-title text-primary ">{{note.title}}</h5>
+                <h6 class="card-subtitle mb-2 text-muted  ">{{note.date}}</h6>
+                <p class="card-text lead" >{{note.text}}</p>
+              </div>
+            </div>
+          </transition-group>
+          </div>
+        </div>
+        
+
+      </div>
+      
+    </div>
+
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
+    <script>
+      var app = new Vue({
+        el: '#app',
+        data:{
+          title:'NoteMaster',
+          note:{
+            title: '',
+            text:'',
+           
+          },
+          notes:[
+            {
+              title:'Visited Obudu Cattle Ranch',
+              text: 'I loved the view and the fresh air',
+              date: new Date(Date.now()).toLocaleString(),
+            
+            }
+          ]
+        },
+        methods:{
+          addNotes(){
+            let { text, title} = this.note
+            this.notes.push({
+              text,
+              title,
+              date:new Date(Date.now()).toLocaleString()
+            })
+          }
+        },
+        removeNote(index){
+          this.notes.splice(index,1);
+        
+        }
+
+
+      })
+        
+    </script>
+      
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  </body>
+</html>
